@@ -7,13 +7,37 @@ Player::Player(sf::Vector2f startingPosition, float segmentSize, uint8_t initial
 	bodyColor = sf::Color::Red;
 
 	movementDirection = Direction::N;
+	pendingMovementDirection = Direction::N;
 
 	initializeBody(startingPosition, initialLength);
 }
 
 void Player::setMovingDirection(Direction newDirection)
 {
-	movementDirection = newDirection;
+	/*
+	* The player shouldn't be allowed to go back on themselves (i.e. switch from
+	* North to South, or East to West). The corresponding values of the Direction
+	* enum are:
+	* 
+	* N = 1
+	* S = 2
+	* E = 3
+	* W = 4
+	* 
+	* From that, N + S = 3 and E + W = 7. No other combinations can result in hese
+	* values, therefore they can be used in order to validate the switch.
+	* 
+	* The player can change the direction multiple times during the movement span, 
+	* therefore might be able to go back on themselves. In order to prevent this
+	* from happening, pendingMovementDirection will store the movement direction
+	* that was chosed by the player, then movementDirection will take the same
+	* value only when actually moving.	
+	*/
+
+	bool canChangeDirection = !((int)newDirection + (int)movementDirection == 3 || (int)newDirection + (int)movementDirection == 7);
+
+	if (canChangeDirection)
+		pendingMovementDirection = newDirection;
 }
 
 void Player::grow()
@@ -41,11 +65,12 @@ sf::FloatRect Player::getNextHeadPosition()
 		break;
 	}
 
-	return sf::FloatRect(nextHeadPosition,body[0]->getShape().getSize());
+	return sf::FloatRect(nextHeadPosition, body[0]->getShape().getSize());
 }
 
 void Player::move()
 {
+	movementDirection = pendingMovementDirection;
 	moveBody();
 
 	// update the head position
@@ -55,6 +80,7 @@ void Player::move()
 
 void Player::move(float jumpingPoint)
 {
+	movementDirection = pendingMovementDirection;
 	moveBody();
 
 	// update the head position
@@ -101,5 +127,4 @@ void Player::moveBody()
 	tail->setPosition(headPosition.x, headPosition.y); // move the shape
 	body.erase(body.end() - 1);
 	body.insert(body.begin() + 1, tail); // insert the object on the second position inside the vector
-
 }

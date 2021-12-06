@@ -26,8 +26,9 @@ private:
 
 private:
 	std::vector<Tile*> body;
-	Direction movementDirection;
 	sf::Vector2f nextHeadPosition;
+	Direction movementDirection;
+	Direction pendingMovementDirection;  
 
 	float segmentSize;
 

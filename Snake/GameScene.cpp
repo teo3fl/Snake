@@ -18,6 +18,7 @@ void GameScene::update(const float& dt)
 	updateKeyTime(dt);
 	updateInput(dt);
 	updatePlayerMovement(dt);
+	checkForQuit();
 }
 
 void GameScene::render()
@@ -66,6 +67,29 @@ bool GameScene::canMove()
 
 void GameScene::updateInput(const float& dt)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+	{
+		player->setMovingDirection(Direction::N);
+		return;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+	{
+		player->setMovingDirection(Direction::W);
+		return;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+	{
+		player->setMovingDirection(Direction::S);
+		return;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+	{
+		player->setMovingDirection(Direction::E);
+		return;
+	}
 }
 
 void GameScene::updatePlayerMovement(const float& dt)
