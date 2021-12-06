@@ -15,13 +15,23 @@ void Map::render(sf::RenderTarget* target)
 {
 	for (auto wall : walls)
 	{
-		wall->Render(target);
+		wall->render(target);
 	}
 
 	for (auto pair : bounds)
 	{
-		pair.second->Render(target);
+		pair.second->render(target);
 	}
+}
+
+bool Map::checkBoundCollision(sf::FloatRect playerHead)
+{
+	return false;
+}
+
+float Map::getTileSize()
+{
+	return tileSize;
 }
 
 void Map::loadFromFile(const std::string& path)

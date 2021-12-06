@@ -31,7 +31,7 @@ private:
 	virtual void renderEntities();
 
 private:
-	//Player* player;
+	Player* player;
 	//FoodSpawner* spawner;
 	Map* map;
 	//Tile* food;

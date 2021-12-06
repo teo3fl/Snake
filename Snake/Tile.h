@@ -9,14 +9,15 @@ class Tile
 public:
 	Tile(float x, float y, float width, float heigth, sf::Color color);
 
-	void SetTexture(const sf::Texture& texture);
+	sf::Vector2f getPosition();
 	void setPosition(int x, int y);
 	void createHitbox();
 
-	const sf::FloatRect GetGlobalBounds() const;
-	const bool Intersects(const sf::FloatRect bounds) const;
+	sf::FloatRect getNextPosition(sf::Vector2f move);
+	const sf::FloatRect getGlobalBounds() const;
+	const bool intersects(const sf::FloatRect bounds) const;
 
-	void Render(sf::RenderTarget* target);
+	void render(sf::RenderTarget* target);
 
 private:
 	sf::RectangleShape shape;

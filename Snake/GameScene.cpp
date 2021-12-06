@@ -15,12 +15,15 @@ GameScene::~GameScene()
 
 void GameScene::update(const float& dt)
 {
+	updateKeyTime(dt);
+	updateInput(dt);
+	updatePlayerMovement(dt);
 }
 
 void GameScene::render()
 {
 	renderBackground();
-	//renderEntities();
+	renderEntities();
 }
 
 void GameScene::initializeVariables(int level)
@@ -28,14 +31,14 @@ void GameScene::initializeVariables(int level)
 	movementSpan = baseMovementSpeed + level * speedIncrease;
 	elapsedTime = 0;
 	score = 0;
-	/*player = NULL;
-	spawner = NULL;
+	player = NULL;
+	/*spawner = NULL;
 	food = NULL;*/
 }
 
 void GameScene::initializePlayer()
 {
-	//player = new Player(map->getStartingPosition());
+	player = new Player(sf::Vector2f(200, 200), map->getTileSize(), 3);
 }
 
 void GameScene::initializeMap(const std::string& path)
@@ -58,7 +61,7 @@ void GameScene::checkForGameOver()
 
 bool GameScene::canMove()
 {
-	return false;
+	return elapsedTime >= movementSpan;
 }
 
 void GameScene::updateInput(const float& dt)
@@ -67,6 +70,20 @@ void GameScene::updateInput(const float& dt)
 
 void GameScene::updatePlayerMovement(const float& dt)
 {
+	elapsedTime += dt;
+	if (canMove())
+	{
+		// check bounds collisions
+		if (map->checkBoundCollision(player->getNextHeadPosition()))
+		{
+			// jump to the other side of the map
+		}
+		else
+		{
+			player->move();
+		}
+		elapsedTime = 0;
+	}
 }
 
 void GameScene::updateScoreText(int score)
@@ -82,6 +99,6 @@ void GameScene::renderBackground()
 
 void GameScene::renderEntities()
 {
-	//player->render(window);
-	//food->Render(window);
+	player->render(window);
+	//food->render(window);
 }
