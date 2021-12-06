@@ -25,9 +25,9 @@ void Tile::createHitbox()
 	hitbox = new Hitbox(shape.getPosition().x, shape.getPosition().y, width, heigth);
 }
 
-sf::FloatRect Tile::getNextPosition(sf::Vector2f move)
+const sf::RectangleShape& Tile::getShape()
 {
-	return sf::FloatRect(shape.getPosition() + move, shape.getSize());
+	return shape;
 }
 
 const sf::FloatRect Tile::getGlobalBounds() const

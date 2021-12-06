@@ -24,9 +24,30 @@ void Map::render(sf::RenderTarget* target)
 	}
 }
 
-bool Map::checkBoundCollision(sf::FloatRect playerHead)
+float Map::getOppositeBoundCoordinate(Direction collidingBound)
 {
-	return false;
+	switch (collidingBound)
+	{
+	case Direction::N:
+		return lowerRightCorner.y;
+	case Direction::S:
+		return upperLeftCorner.y;
+	case Direction::E:
+		return upperLeftCorner.x;
+	case Direction::W:
+		return lowerRightCorner.x;
+	}
+}
+
+Direction Map::checkBoundCollision(sf::FloatRect playerHead)
+{
+	for (auto& [direction,bound] : bounds)
+	{
+		if (bound->intersects(playerHead))
+			return direction;
+	}
+
+	return Direction::None;
 }
 
 float Map::getTileSize()
@@ -53,6 +74,9 @@ void Map::loadFromFile(const std::string& path)
 		int width;
 		int heigth;
 		in >> width >> heigth;
+
+		lowerRightCorner.x = upperLeftCorner.x + tileSize * width;
+		lowerRightCorner.y = upperLeftCorner.y + tileSize * heigth;
 
 		bounds[Direction::N] = new Tile(borderX - tileSize, borderY - tileSize, (width + 2) * tileSize , tileSize, boundColor);
 		bounds[Direction::S] = new Tile(borderX - tileSize, borderY + tileSize * width, (width + 2) * tileSize, tileSize, boundColor);

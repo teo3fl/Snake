@@ -38,7 +38,7 @@ void GameScene::initializeVariables(int level)
 
 void GameScene::initializePlayer()
 {
-	player = new Player(sf::Vector2f(200, 200), map->getTileSize(), 3);
+	player = new Player(sf::Vector2f(200, 300), map->getTileSize(), 3);
 }
 
 void GameScene::initializeMap(const std::string& path)
@@ -74,13 +74,15 @@ void GameScene::updatePlayerMovement(const float& dt)
 	if (canMove())
 	{
 		// check bounds collisions
-		if (map->checkBoundCollision(player->getNextHeadPosition()))
+		auto collizionDirection = map->checkBoundCollision(player->getNextHeadPosition());
+		if (collizionDirection == Direction::None)
 		{
-			// jump to the other side of the map
+			player->move();
 		}
 		else
 		{
-			player->move();
+			// jump to the other side of the map
+			player->move(map->getOppositeBoundCoordinate(collizionDirection));
 		}
 		elapsedTime = 0;
 	}

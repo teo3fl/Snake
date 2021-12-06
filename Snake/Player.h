@@ -17,6 +17,7 @@ public:
 	sf::FloatRect getNextHeadPosition();
 
 	void move();
+	void move(float jumpingPoint);
 	void render(sf::RenderTarget* target);
 
 private:

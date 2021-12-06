@@ -41,7 +41,7 @@ sf::FloatRect Player::getNextHeadPosition()
 		break;
 	}
 
-	return body[0]->getNextPosition(nextHeadPosition);
+	return sf::FloatRect(nextHeadPosition,body[0]->getShape().getSize());
 }
 
 void Player::move()
@@ -51,6 +51,29 @@ void Player::move()
 	// update the head position
 	Tile* head = body[0];
 	head->setPosition(nextHeadPosition.x, nextHeadPosition.y);
+}
+
+void Player::move(float jumpingPoint)
+{
+	moveBody();
+
+	// update the head position
+	Tile* head = body[0];
+	switch (movementDirection)
+	{
+	case Direction::N:
+		head->setPosition(nextHeadPosition.x, jumpingPoint - segmentSize);
+		break;
+	case Direction::S:
+		head->setPosition(nextHeadPosition.x, jumpingPoint);
+		break;
+	case Direction::E:
+		head->setPosition(jumpingPoint, nextHeadPosition.y);
+		break;
+	case Direction::W:
+		head->setPosition(jumpingPoint - segmentSize, nextHeadPosition.y);
+		break;
+	}
 }
 
 void Player::render(sf::RenderTarget* target)
@@ -76,7 +99,7 @@ void Player::moveBody()
 	// take the last segment and move it in front of the others (current head position), instead of moving all of them by one unit
 	Tile* tail = *body.rbegin();
 	tail->setPosition(headPosition.x, headPosition.y); // move the shape
-	body.erase(body.end()-1);
+	body.erase(body.end() - 1);
 	body.insert(body.begin() + 1, tail); // insert the object on the second position inside the vector
 
 }

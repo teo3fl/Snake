@@ -13,7 +13,7 @@ public:
 	void setPosition(int x, int y);
 	void createHitbox();
 
-	sf::FloatRect getNextPosition(sf::Vector2f move);
+	const sf::RectangleShape& getShape();
 	const sf::FloatRect getGlobalBounds() const;
 	const bool intersects(const sf::FloatRect bounds) const;
 
