@@ -3,10 +3,11 @@
 #include <sstream>
 #include <string>
 
+#include "GameScene.h"
+
 MenuScene::MenuScene(sf::RenderWindow* window, std::stack<Scene*>* scenes)
 	: Scene(window), scenes(scenes)
 {
-	initializeKeybinds();
 	initializeFont();
 	initializeButtons();
 	initializeText();
@@ -18,19 +19,6 @@ MenuScene::~MenuScene()
 	for (it = buttons.begin(); it != buttons.end(); ++it)
 	{
 		delete it->second;
-	}
-}
-
-void MenuScene::initializeKeybinds()
-{
-	// to do
-}
-
-void MenuScene::initializeFont()
-{
-	if (!font.loadFromFile("../External/Resources/Fonts/GALS.ttf"))
-	{
-		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_FONT_FROM_FILE";
 	}
 }
 
@@ -75,11 +63,11 @@ void MenuScene::initializeButtons()
 		float x = offsetX + (buttonSize + padding) * (i % lineCapacity);
 		float y = offsetY + (buttonSize + padding) * (i / lineCapacity);
 
-		buttons["LVL" + std::to_string(i+1)] = new Button(x, y, buttonSize, buttonSize,
-			&font, std::to_string(i+1), 30,
+		buttons["LVL" + std::to_string(i + 1)] = new Button(x, y, buttonSize, buttonSize,
+			&font, std::to_string(i + 1), 30,
 			sf::Color::White, sf::Color::Black);
 	}
-	
+
 	buttons["EXIT_STATE"] = new Button(20, 500, 100, 50,
 		&font, "EXIT", 30,
 		sf::Color::White, sf::Color::Black);
@@ -105,9 +93,10 @@ void MenuScene::updateButtons()
 
 	for (int i = 0; i < 48; ++i)
 	{
-		if (buttons["LVL" + std::to_string(i+1)]->isPressed())
+		if (buttons["LVL" + std::to_string(i + 1)]->isPressed())
 		{
-			//scenes->push(new GameScene());
+			auto path = mapPath + "map" + std::to_string(i) + ".ini";
+			scenes->push(new GameScene(window, i, path));
 		}
 	}
 
@@ -124,19 +113,16 @@ void MenuScene::update(const float& dt)
 	updateButtons();
 }
 
-void MenuScene::renderButtons(sf::RenderTarget& target)
+void MenuScene::renderButtons()
 {
 	for (auto& it : this->buttons)
 	{
-		it.second->render(&target);
+		it.second->render(window);
 	}
 }
 
-void MenuScene::render(sf::RenderTarget* target)
+void MenuScene::render()
 {
-	if (!target)
-		target = window;
-
-	renderText(target);
-	renderButtons(*target);
+	renderText();
+	renderButtons();
 }

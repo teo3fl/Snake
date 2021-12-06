@@ -14,6 +14,14 @@ Scene::~Scene()
 
 }
 
+void Scene::initializeFont()
+{
+	if (!font.loadFromFile("../External/Resources/Fonts/GALS.ttf"))
+	{
+		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_FONT_FROM_FILE";
+	}
+}
+
 void Scene::setText(sf::Text& text, const sf::Font& font, const sf::Color& fillColor, uint16_t size, const sf::Vector2f& position, float thickness)
 {
 	text.setFillColor(fillColor);
@@ -47,11 +55,11 @@ void Scene::updateKeyTime(const float& dt)
 		keyTime += 100.f * dt;
 }
 
-void Scene::renderText(sf::RenderTarget* target)
+void Scene::renderText()
 {
 	for (auto it = text.begin(); it != text.end(); it++)
 	{
-		target->draw(*it);
+		window->draw(*it);
 	}
 }
 

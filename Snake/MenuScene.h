@@ -12,27 +12,26 @@ public:
 	virtual ~MenuScene();
 
 	void update(const float& dt) override;
-	void render(sf::RenderTarget* target = nullptr) override;
+	void render() override;
 
 private:
 	//Functions
 	void initializeButtons();
-	void initializeKeybinds() override;
-	void initializeFont();
 	void initializeText();
 
 	void updateInput(const float& dt) override;
 	void updateMousePosition();
 	void updateButtons();
 
-	void renderButtons(sf::RenderTarget& target);
+	void renderButtons();
 
 private:
-	sf::Font font;
 	std::stack<Scene*>* scenes;
 	std::map<std::string, Button*> buttons;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
+
+	const std::string mapPath = "../External/Resources/Maps/";
 };
 
