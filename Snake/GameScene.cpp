@@ -106,7 +106,7 @@ void GameScene::updatePlayerMovement(const float& dt)
 		else
 		{
 			// jump to the other side of the map
-			player->move(map->getOppositeBoundCoordinate(collizionDirection));
+			player->move(collizionDirection, map->getOppositeBoundCoordinate(collizionDirection));
 		}
 		elapsedTime = 0;
 	}

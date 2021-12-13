@@ -78,14 +78,14 @@ void Player::move()
 	head->setPosition(nextHeadPosition.x, nextHeadPosition.y);
 }
 
-void Player::move(float jumpingPoint)
+void Player::move(Direction colliderOrientation, float jumpingPoint)
 {
 	movementDirection = pendingMovementDirection;
 	moveBody();
 
 	// update the head position
 	Tile* head = body[0];
-	switch (movementDirection)
+	switch (colliderOrientation)
 	{
 	case Direction::N:
 		head->setPosition(nextHeadPosition.x, jumpingPoint - segmentSize);
