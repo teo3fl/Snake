@@ -2,8 +2,6 @@
 
 #include "SFML/Graphics.hpp"
 
-#include "Hitbox.h"
-
 class Tile
 {
 public:
@@ -11,7 +9,6 @@ public:
 
 	sf::Vector2f getPosition();
 	void setPosition(int x, int y);
-	void createHitbox();
 
 	const sf::RectangleShape& getShape();
 	const sf::FloatRect getGlobalBounds() const;
@@ -21,7 +18,6 @@ public:
 
 private:
 	sf::RectangleShape shape;
-	Hitbox* hitbox;
 
 	float width;
 	float heigth;

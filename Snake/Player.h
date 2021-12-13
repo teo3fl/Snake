@@ -14,7 +14,9 @@ public:
 	void setMovingDirection(Direction newDirection);
 
 	void grow();
-	sf::FloatRect getNextHeadPosition();
+	const sf::FloatRect& getNextHeadPosition();
+	const sf::FloatRect getHead();
+	bool checkSelfCollision();
 
 	void move();
 	void move(Direction colliderOrientation, float jumpingPoint);

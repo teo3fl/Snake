@@ -20,11 +20,6 @@ void Tile::setPosition(int x, int y)
 	shape.setPosition(x, y);
 }
 
-void Tile::createHitbox()
-{
-	hitbox = new Hitbox(shape.getPosition().x, shape.getPosition().y, width, heigth);
-}
-
 const sf::RectangleShape& Tile::getShape()
 {
 	return shape;
@@ -43,6 +38,4 @@ const bool Tile::intersects(const sf::FloatRect bounds) const
 void Tile::render(sf::RenderTarget* target)
 {
 	target->draw(shape);
-	if (hitbox)
-		hitbox->render(target);
 }

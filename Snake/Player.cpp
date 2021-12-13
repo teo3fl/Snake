@@ -46,7 +46,7 @@ void Player::grow()
 	body.push_back(new Tile(tailPosition.x, tailPosition.y + segmentSize, segmentSize, segmentSize, bodyColor));
 }
 
-sf::FloatRect Player::getNextHeadPosition()
+const sf::FloatRect& Player::getNextHeadPosition()
 {
 	auto currentHeadPosition = body[0]->getPosition();
 	switch (movementDirection)
@@ -66,6 +66,24 @@ sf::FloatRect Player::getNextHeadPosition()
 	}
 
 	return sf::FloatRect(nextHeadPosition, body[0]->getShape().getSize());
+}
+
+const sf::FloatRect Player::getHead()
+{
+	return body[0]->getGlobalBounds();
+}
+
+bool Player::checkSelfCollision()
+{
+	Tile* head = body[0];
+
+	for (int i = 1; i < body.size(); ++i)
+	{
+		if (head->intersects(body[i]->getGlobalBounds()))
+			return true;
+	}
+
+	return false;
 }
 
 void Player::move()

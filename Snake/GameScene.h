@@ -39,9 +39,14 @@ private:
 	float movementSpan; // each MovementSpan seconds, the player's position will be updated
 	const float baseMovementSpeed = 1; // the number of seconds between moves
 	const float speedIncrease = 0.3f; // will increase the movementSpan depending on the difficulty level
-	float elapsedTime;
+	float elapsedTime; // counts the time that has passed since the last move
 
 	int score;
 	sf::Text scoreText;
+
+	// game over
+	float gameOver;
+	const float gameOverScreenDuration = 2.f;
+	float elapsedGameOverTime;
 };
 

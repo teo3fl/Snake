@@ -50,6 +50,17 @@ Direction Map::checkBoundCollision(sf::FloatRect playerHead)
 	return Direction::None;
 }
 
+bool Map::checkWallCollision(sf::FloatRect playerHead)
+{
+	for (auto wall : walls)
+	{
+		if (wall->intersects(playerHead))
+			return true;
+	}
+
+	return false;
+}
+
 float Map::getTileSize()
 {
 	return tileSize;

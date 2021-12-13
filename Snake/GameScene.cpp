@@ -15,9 +15,23 @@ GameScene::~GameScene()
 
 void GameScene::update(const float& dt)
 {
-	updateKeyTime(dt);
-	updateInput(dt);
-	updatePlayerMovement(dt);
+	checkForGameOver();
+	if (!gameOver)
+	{
+		// update input and visuals
+		updateKeyTime(dt);
+		updateInput(dt);
+		updatePlayerMovement(dt);
+	}
+	else
+	{
+		// freeze screen
+		elapsedGameOverTime += dt;
+		if (elapsedGameOverTime >= gameOverScreenDuration)
+		{
+			quit = true;
+		}
+	}
 	checkForQuit();
 }
 
@@ -35,6 +49,7 @@ void GameScene::initializeVariables(int level)
 	player = NULL;
 	/*spawner = NULL;
 	food = NULL;*/
+	elapsedGameOverTime = 0;
 }
 
 void GameScene::initializePlayer()
@@ -57,7 +72,10 @@ void GameScene::initializeText()
 
 void GameScene::checkForGameOver()
 {
-
+	if (player->checkSelfCollision() || map->checkWallCollision(player->getHead()))
+	{
+		gameOver = true;
+	}
 }
 
 bool GameScene::canMove()
