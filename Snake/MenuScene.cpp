@@ -93,8 +93,10 @@ void MenuScene::updateButtons()
 
 	for (int i = 0; i < 48; ++i)
 	{
-		if (buttons["LVL" + std::to_string(i + 1)]->isPressed())
+		Button* button = buttons["LVL" + std::to_string(i + 1)];
+		if (button->isPressed())
 		{
+			button->reset();
 			auto path = mapPath + "map" + std::to_string(i) + ".ini";
 			scenes->push(new GameScene(window, i, path));
 		}
