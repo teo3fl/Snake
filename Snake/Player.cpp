@@ -12,6 +12,14 @@ Player::Player(sf::Vector2f startingPosition, float segmentSize, uint8_t initial
 	initializeBody(startingPosition, initialLength);
 }
 
+Player::~Player()
+{
+	for (size_t i = 0; i < body.size(); i++)
+	{
+		delete body[i];
+	}
+}
+
 void Player::setMovingDirection(Direction newDirection)
 {
 	/*

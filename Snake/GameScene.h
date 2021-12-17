@@ -1,6 +1,5 @@
 #pragma once
 
-#include "FoodSpawner.h"
 #include "Map.h"
 #include "Player.h"
 #include "Scene.h"
@@ -22,19 +21,20 @@ private:
 
 	void checkForGameOver();
 	bool canMove();
+	void spawnFood();
+	void checkFoodCollision();
 
 	void updateInput(const float& dt) override;
 	void updatePlayerMovement(const float& dt);
-	void updateScoreText(int score);
+	void updateScoreText();
 
 	void renderBackground();
 	virtual void renderEntities();
 
 private:
 	Player* player;
-	//FoodSpawner* spawner;
 	Map* map;
-	//Tile* food;
+	Tile* food;
 
 	float movementSpan; // each MovementSpan seconds, the player's position will be updated
 	const float baseMovementSpeed = 1; // the number of seconds between moves

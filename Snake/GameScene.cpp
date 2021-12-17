@@ -22,6 +22,7 @@ void GameScene::update(const float& dt)
 		updateKeyTime(dt);
 		updateInput(dt);
 		updatePlayerMovement(dt);
+		checkFoodCollision();
 	}
 	else
 	{
@@ -47,8 +48,7 @@ void GameScene::initializeVariables(int level)
 	elapsedTime = 0;
 	score = 0;
 	player = NULL;
-	/*spawner = NULL;
-	food = NULL;*/
+	food = NULL;
 	elapsedGameOverTime = 0;
 }
 
@@ -60,12 +60,15 @@ void GameScene::initializePlayer()
 void GameScene::initializeMap(const std::string& path)
 {
 	map = new Map(path);
+	float tileSize = map->getTileSize();
+	sf::Vector2f position = map->getEmptySpace();
+	food = new Tile(position.x, position.y, tileSize, tileSize, sf::Color::Cyan);
 }
 
 void GameScene::initializeText()
 {
-	updateScoreText(0);
 	setText(scoreText, font, sf::Color::White, 30, sf::Vector2f(30.f, 30.f), 0.5f);
+	updateScoreText();
 
 	text.push_back(scoreText);
 }
@@ -81,6 +84,23 @@ void GameScene::checkForGameOver()
 bool GameScene::canMove()
 {
 	return elapsedTime >= movementSpan;
+}
+
+void GameScene::spawnFood()
+{
+	auto newPosition = map->getEmptySpace();
+	food->setPosition(newPosition.x, newPosition.y);
+}
+
+void GameScene::checkFoodCollision()
+{
+	if (player->getHead().intersects(food->getGlobalBounds()))
+	{
+		player->grow();
+		++score;
+		updateScoreText();
+		spawnFood();
+	}
 }
 
 void GameScene::updateInput(const float& dt)
@@ -130,7 +150,7 @@ void GameScene::updatePlayerMovement(const float& dt)
 	}
 }
 
-void GameScene::updateScoreText(int score)
+void GameScene::updateScoreText()
 {
 	scoreText.setString("Score: " + score);
 }
@@ -144,5 +164,5 @@ void GameScene::renderBackground()
 void GameScene::renderEntities()
 {
 	player->render(window);
-	//food->render(window);
+	food->render(window);
 }

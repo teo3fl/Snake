@@ -99,6 +99,8 @@ void MenuScene::updateButtons()
 			button->reset();
 			auto path = mapPath + "map" + std::to_string(i) + ".ini";
 			scenes->push(new GameScene(window, i, path));
+
+			break;
 		}
 	}
 

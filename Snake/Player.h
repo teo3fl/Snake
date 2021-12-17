@@ -10,6 +10,7 @@ class Player
 {
 public:
 	Player(sf::Vector2f startingPosition, float segmentSize, uint8_t initialLength = 2);
+	~Player();
 
 	void setMovingDirection(Direction newDirection);
 
