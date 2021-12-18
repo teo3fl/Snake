@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Map.h"
+#include "Tile.h"
+
+enum class Direction { None, N, S, E, W };
 
 class Player
 {
@@ -15,12 +17,14 @@ public:
 	const sf::FloatRect getHead();
 	bool checkSelfCollision();
 
+	const bool intersects(const sf::FloatRect bounds) const;
+
 	void move();
 	void move(Direction colliderOrientation, float jumpingPoint);
 	void render(sf::RenderTarget* target);
 
 private:
-	void initializeBody(sf::Vector2f startingPosition, uint8_t initialLength);
+	void initializeBody(const sf::Vector2f& startingPosition, uint8_t initialLength);
 	void moveBody();
 
 private:

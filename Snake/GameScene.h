@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Map.h"
-#include "Player.h"
 #include "Scene.h"
 
 class GameScene : public Scene
@@ -18,6 +17,7 @@ private:
 	void initializePlayer();
 	void initializeMap(const std::string& path);
 	void initializeText();
+	void initializeFood();
 
 	void checkForGameOver();
 	bool canMove();

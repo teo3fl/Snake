@@ -8,6 +8,7 @@ GameScene::GameScene(sf::RenderWindow* window, int level, const std::string& map
 	initializePlayer();
 	initializeFont();
 	initializeText();
+	initializeFood();
 }
 
 GameScene::~GameScene()
@@ -61,9 +62,6 @@ void GameScene::initializePlayer()
 void GameScene::initializeMap(const std::string& path)
 {
 	map = new Map(path);
-	float tileSize = map->getTileSize();
-	sf::Vector2f position = map->getEmptySpace();
-	food = new Tile(position.x, position.y, tileSize, tileSize, sf::Color::Cyan);
 }
 
 void GameScene::initializeText()
@@ -73,6 +71,13 @@ void GameScene::initializeText()
 	updateScoreText();
 
 	text.push_back(scoreText);
+}
+
+void GameScene::initializeFood()
+{
+	float tileSize = map->getTileSize();
+	sf::Vector2f position = map->getEmptySpace(player);
+	food = new Tile(position.x, position.y, tileSize, tileSize, sf::Color::Cyan);
 }
 
 void GameScene::checkForGameOver()
@@ -90,8 +95,15 @@ bool GameScene::canMove()
 
 void GameScene::spawnFood()
 {
-	auto newPosition = map->getEmptySpace();
-	food->setPosition(newPosition.x, newPosition.y);
+	auto newPosition = map->getEmptySpace(player);
+	if (newPosition.x >= 0)
+	{
+		food->setPosition(newPosition.x, newPosition.y);
+	}
+	else
+	{
+		delete food;
+	}
 }
 
 void GameScene::checkFoodCollision()
@@ -167,5 +179,6 @@ void GameScene::renderBackground()
 void GameScene::renderEntities()
 {
 	player->render(window);
-	food->render(window);
+	if (food)
+		food->render(window);
 }

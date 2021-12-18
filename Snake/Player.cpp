@@ -27,20 +27,20 @@ void Player::setMovingDirection(Direction newDirection)
 	* The player shouldn't be allowed to go back on themselves (i.e. switch from
 	* North to South, or East to West). The corresponding values of the Direction
 	* enum are:
-	* 
+	*
 	* N = 1
 	* S = 2
 	* E = 3
 	* W = 4
-	* 
+	*
 	* From that, N + S = 3 and E + W = 7. No other combinations can result in hese
 	* values, therefore they can be used in order to validate the switch.
-	* 
-	* The player can change the direction multiple times during the movement span, 
+	*
+	* The player can change the direction multiple times during the movement span,
 	* therefore might be able to go back on themselves. In order to prevent this
 	* from happening, pendingMovementDirection will store the movement direction
 	* that was chosed by the player, then movementDirection will take the same
-	* value only when actually moving.	
+	* value only when actually moving.
 	*/
 
 	bool canChangeDirection = !((int)newDirection + (int)movementDirection == 3 || (int)newDirection + (int)movementDirection == 7);
@@ -95,6 +95,17 @@ bool Player::checkSelfCollision()
 	return false;
 }
 
+const bool Player::intersects(const sf::FloatRect bounds) const
+{
+	for (auto& segment : body)
+	{
+		if (segment->intersects(bounds))
+			return true;
+	}
+
+	return false;
+}
+
 void Player::move()
 {
 	movementDirection = pendingMovementDirection;
@@ -137,7 +148,7 @@ void Player::render(sf::RenderTarget* target)
 	}
 }
 
-void Player::initializeBody(sf::Vector2f startingPosition, uint8_t initialLength)
+void Player::initializeBody(const sf::Vector2f& startingPosition, uint8_t initialLength)
 {
 	body.push_back(new Tile(startingPosition.x, startingPosition.y, segmentSize, segmentSize, headColor));
 	for (int i = 1; i < initialLength; i++)

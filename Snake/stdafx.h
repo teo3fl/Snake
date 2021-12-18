@@ -9,6 +9,7 @@
 #include <random>
 #include <sstream>
 #include <cstdint>
+#include <iostream>
 
 // SFML
 

@@ -84,7 +84,7 @@ bool Map::checkWallCollision(sf::FloatRect playerHead)
 	return false;
 }
 
-sf::Vector2f Map::getEmptySpace(/*Player* player*/)
+sf::Vector2f Map::getEmptySpace(Player* player)
 {
 	/*
 	* will pick a random tile on the map (X)
@@ -121,26 +121,44 @@ sf::Vector2f Map::getEmptySpace(/*Player* player*/)
 
 
 	std::vector<std::pair<int, int>> emptyTiles;
+
+	// lambda
+
+	auto getRect = [&](int x, int y)
+	{
+		int coordX = upperLeftCorner.x + x * tileSize;
+		int coordY = upperLeftCorner.y + y * tileSize;
+		return sf::FloatRect(coordX, coordY, tileSize, tileSize);
+	};
+
 	auto checkSide = [&](int start, int end, int constant, bool vertical)
 	{
 		for (int i = start; i < end + 1; ++i)
 		{
 			if (vertical)
 			{
-				if (logicalMap[i][constant] == MapTile::None)
+				if (logicalMap[i][constant] == MapTile::None && !player->intersects(getRect(i, constant)))
 				{
-					emptyTiles.emplace_back(constant, i);
+					emptyTiles.emplace_back(i, constant);
 				}
 			}
 			else
 			{
-				if (logicalMap[constant][i] == MapTile::None)
+				if (logicalMap[constant][i] == MapTile::None && !player->intersects(getRect(constant, i)))
 				{
 					emptyTiles.emplace_back(constant, i);
 				}
 			}
 		}
 	};
+
+
+	// check first generated tile
+	if (logicalMap[x][y] == MapTile::None && !player->intersects(getRect(x, y)))
+		return sf::Vector2f(upperLeftCorner.x + x * tileSize, upperLeftCorner.y + y * tileSize);
+
+
+	// else iterate through
 
 	for (int R = 0; R < maxSize; ++R)
 	{
@@ -187,7 +205,7 @@ sf::Vector2f Map::getEmptySpace(/*Player* player*/)
 		}
 	}
 
-	return sf::Vector2f();
+	return sf::Vector2f(-1,-1);
 }
 
 float Map::getTileSize()
@@ -227,9 +245,9 @@ void Map::loadFromFile(const std::string& path)
 		lowerRightCorner.y = upperLeftCorner.y + tileSize * gridHeigth;
 
 		bounds[Direction::N] = new Tile(borderX - tileSize, borderY - tileSize, (gridWidth + 2) * tileSize, tileSize, boundColor);
-		bounds[Direction::S] = new Tile(borderX - tileSize, borderY + tileSize * gridWidth, (gridWidth + 2) * tileSize, tileSize, boundColor);
-		bounds[Direction::E] = new Tile(borderX + gridWidth * tileSize, borderY, tileSize, tileSize * gridWidth, boundColor);
-		bounds[Direction::W] = new Tile(borderX - tileSize, borderY, tileSize, tileSize * gridWidth, boundColor);
+		bounds[Direction::S] = new Tile(borderX - tileSize, borderY + tileSize * gridHeigth, (gridWidth + 2) * tileSize, tileSize, boundColor);
+		bounds[Direction::E] = new Tile(borderX + gridWidth * tileSize, borderY, tileSize, tileSize * gridHeigth, boundColor);
+		bounds[Direction::W] = new Tile(borderX - tileSize, borderY, tileSize, tileSize * gridHeigth, boundColor);
 
 		while (!in.eof())
 		{

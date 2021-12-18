@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Tile.h"
+#include "Player.h"
 
-enum class Direction { None, N, S, E, W };
 enum class MapTile { None, Wall, Snake };
 
 class Map
@@ -18,7 +17,7 @@ public:
 	float getOppositeBoundCoordinate(Direction collidingBound); // when colliding with a certain bound, returns the X or Y (based on the direction) coordinate of the opposite bound
 	Direction checkBoundCollision(sf::FloatRect playerHead);
 	bool checkWallCollision(sf::FloatRect playerHead);
-	sf::Vector2f getEmptySpace(/*Player* player*/);
+	sf::Vector2f getEmptySpace(Player* player);
 
 	float getTileSize();
 
