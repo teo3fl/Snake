@@ -1,8 +1,6 @@
 #pragma once
 #include "Scene.h"
 
-#include<stack>
-
 class Game
 {
 public:

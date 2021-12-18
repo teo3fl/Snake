@@ -1,11 +1,5 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
-
-#include <string>
-#include <cstdint>
-
-
 class Button
 {
 public:

@@ -1,7 +1,5 @@
+#include "stdafx.h"
 #include "Map.h"
-
-#include <fstream>
-#include <utility>
 
 Map::Map(const std::string& path)
 {

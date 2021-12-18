@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Tile.h"
 
 Tile::Tile(float x, float y, float width, float heigth, sf::Color color)

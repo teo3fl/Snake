@@ -3,8 +3,6 @@
 #include "Button.h"
 #include "Scene.h"
 
-#include <stack>
-
 class MenuScene : public Scene
 {
 public:

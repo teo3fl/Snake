@@ -1,7 +1,5 @@
+#include "stdafx.h"
 #include "MenuScene.h"
-
-#include <sstream>
-#include <string>
 
 #include "GameScene.h"
 

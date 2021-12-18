@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Player.h"
 
 Player::Player(sf::Vector2f startingPosition, float segmentSize, uint8_t initialLength)

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <random>
-
 #include "Tile.h"
 
 enum class Direction { None, N, S, E, W };

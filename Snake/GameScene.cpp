@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "GameScene.h"
 
 GameScene::GameScene(sf::RenderWindow* window, int level, const std::string& mapPath) : Scene(window)
