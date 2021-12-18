@@ -26,6 +26,7 @@ public:
 private:
 	void initializeBody(const sf::Vector2f& startingPosition, uint8_t initialLength);
 	void moveBody();
+	const sf::Color& getNextSegmentColor();
 
 private:
 	std::vector<Tile*> body;
@@ -36,6 +37,6 @@ private:
 	float segmentSize;
 
 	sf::Color headColor;
-	sf::Color bodyColor;
+	std::vector<sf::Color> bodyColors;
 };
 

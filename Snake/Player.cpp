@@ -4,8 +4,10 @@
 Player::Player(sf::Vector2f startingPosition, float segmentSize, uint8_t initialLength)
 	: segmentSize(segmentSize)
 {
-	headColor = sf::Color::Magenta;
-	bodyColor = sf::Color::Red;
+	headColor = sf::Color(123, 0, 255);
+	bodyColors.push_back(sf::Color(53, 0, 176));
+	bodyColors.push_back(sf::Color(41, 0, 138));
+	bodyColors.push_back(sf::Color(31, 0, 105));
 
 	movementDirection = Direction::N;
 	pendingMovementDirection = Direction::N;
@@ -52,7 +54,7 @@ void Player::setMovingDirection(Direction newDirection)
 void Player::grow()
 {
 	sf::Vector2f tailPosition = body.back()->getPosition();
-	body.push_back(new Tile(tailPosition.x, tailPosition.y + segmentSize, segmentSize, segmentSize, bodyColor));
+	body.push_back(new Tile(tailPosition.x, tailPosition.y + segmentSize, segmentSize, segmentSize, getNextSegmentColor()));
 }
 
 const sf::FloatRect& Player::getNextHeadPosition()
@@ -153,16 +155,20 @@ void Player::initializeBody(const sf::Vector2f& startingPosition, uint8_t initia
 	body.push_back(new Tile(startingPosition.x, startingPosition.y, segmentSize, segmentSize, headColor));
 	for (int i = 1; i < initialLength; i++)
 	{
-		body.push_back(new Tile(startingPosition.x, startingPosition.y + segmentSize, segmentSize, segmentSize, bodyColor));
+		body.push_back(new Tile(startingPosition.x, startingPosition.y + segmentSize, segmentSize, segmentSize, getNextSegmentColor()));
 	}
 }
 
 void Player::moveBody()
 {
-	sf::Vector2f headPosition = body[0]->getPosition();
-	// take the last segment and move it in front of the others (current head position), instead of moving all of them by one unit
-	Tile* tail = *body.rbegin();
-	tail->setPosition(headPosition.x, headPosition.y); // move the shape
-	body.erase(body.end() - 1);
-	body.insert(body.begin() + 1, tail); // insert the object on the second position inside the vector
+	for (size_t i = body.size() - 1; i > 0; i--)
+	{
+		auto nextTilePosition = body[i - 1]->getPosition();
+		body[i]->setPosition(nextTilePosition.x, nextTilePosition.y);
+	}
+}
+
+const sf::Color& Player::getNextSegmentColor()
+{
+	return bodyColors[(body.size()-1)/2 % bodyColors.size()];
 }
