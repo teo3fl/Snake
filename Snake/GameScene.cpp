@@ -67,7 +67,8 @@ void GameScene::initializeMap(const std::string& path)
 
 void GameScene::initializeText()
 {
-	setText(scoreText, font, sf::Color::White, 30, sf::Vector2f(30.f, 30.f), 0.5f);
+	scoreText = new sf::Text();
+	setText(*scoreText, font, sf::Color::White, 30, sf::Vector2f(30.f, 30.f), 0.5f);
 	updateScoreText();
 
 	text.push_back(scoreText);
@@ -152,7 +153,8 @@ void GameScene::updatePlayerMovement(const float& dt)
 
 void GameScene::updateScoreText()
 {
-	scoreText.setString("Score: " + score);
+	auto s = "Score: " + std::to_string(score);
+	scoreText->setString(s);
 }
 
 void GameScene::renderBackground()

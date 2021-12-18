@@ -11,7 +11,10 @@ Scene::Scene(sf::RenderWindow* window)
 
 Scene::~Scene()
 {
-
+	for (size_t i = 0; i < text.size(); i++)
+	{
+		delete text[i];
+	}
 }
 
 void Scene::initializeFont()
@@ -59,7 +62,7 @@ void Scene::renderText()
 {
 	for (auto it = text.begin(); it != text.end(); it++)
 	{
-		window->draw(*it);
+		window->draw(**it);
 	}
 }
 

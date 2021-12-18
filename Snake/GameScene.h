@@ -42,7 +42,7 @@ private:
 	float elapsedTime; // counts the time that has passed since the last move
 
 	int score;
-	sf::Text scoreText;
+	sf::Text* scoreText;
 
 	// game over
 	float gameOver;

@@ -24,9 +24,9 @@ MenuScene::~MenuScene()
 
 void MenuScene::initializeText()
 {
-	sf::Text titleText;
-	titleText.setString("SNAKE");
-	setText(titleText, font, sf::Color::White, 30, sf::Vector2f(30.f, 30.f), 0.5f);
+	sf::Text* titleText = new sf::Text();
+	titleText->setString("SNAKE");
+	setText(*titleText, font, sf::Color::White, 30, sf::Vector2f(30.f, 30.f), 0.5f);
 
 	text.push_back(titleText);
 
@@ -36,15 +36,15 @@ void MenuScene::initializeText()
 	ss << "ESC - back to menu / close\n";
 	ss << "Mouse - press buttons";
 
-	sf::Text keybindsText;
-	keybindsText.setString(ss.str());
-	setText(keybindsText, font, sf::Color::White, 20, sf::Vector2f(10.f, 100.f));
+	sf::Text* keybindsText = new sf::Text();
+	keybindsText->setString(ss.str());
+	setText(*keybindsText, font, sf::Color::White, 20, sf::Vector2f(10.f, 100.f));
 
 	text.push_back(keybindsText);
 
-	sf::Text levelText;
-	levelText.setString("Levels:");
-	setText(levelText, font, sf::Color::White, 20, sf::Vector2f(620.f, 30.f));
+	sf::Text* levelText = new sf::Text();
+	levelText->setString("Levels:");
+	setText(*levelText, font, sf::Color::White, 20, sf::Vector2f(620.f, 30.f));
 
 	text.push_back(levelText);
 }

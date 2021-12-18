@@ -32,9 +32,8 @@ protected:
 	sf::RenderWindow* window;
 	sf::Font font;
 
-	std::vector<sf::Text> text;
+	std::vector<sf::Text*> text;
 
-	std::map<std::string, int> keybinds;
 	bool quit : 1;
 
 	float keyTime;
