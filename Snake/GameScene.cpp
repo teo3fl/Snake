@@ -13,6 +13,13 @@ GameScene::GameScene(sf::RenderWindow* window, int level, const std::string& map
 
 GameScene::~GameScene()
 {
+	delete movementTimer;
+	delete gameOverTimer;
+
+	delete player;
+	delete map;
+
+	delete food;
 }
 
 void GameScene::update(const float& dt)
@@ -29,8 +36,8 @@ void GameScene::update(const float& dt)
 	else
 	{
 		// freeze screen
-		elapsedGameOverTime += dt;
-		if (elapsedGameOverTime >= gameOverScreenDuration)
+		gameOverTimer->update(dt);
+		if (gameOverTimer->reachedEnd())
 		{
 			quit = true;
 		}
@@ -47,11 +54,12 @@ void GameScene::render()
 void GameScene::initializeVariables(int level)
 {
 	movementSpan = baseMovementSpeed + level * speedIncrease;
-	elapsedTime = 0;
+	movementTimer = new Timer(movementSpan);
 	score = 0;
 	player = NULL;
 	food = NULL;
-	elapsedGameOverTime = 0;
+	gameOverTimer = new Timer(gameOverScreenDuration);
+	gameOver = false;
 }
 
 void GameScene::initializePlayer()
@@ -90,7 +98,7 @@ void GameScene::checkForGameOver()
 
 bool GameScene::canMove()
 {
-	return elapsedTime >= movementSpan;
+	return movementTimer->reachedEnd();
 }
 
 void GameScene::spawnFood()
@@ -146,7 +154,7 @@ void GameScene::updateInput(const float& dt)
 
 void GameScene::updatePlayerMovement(const float& dt)
 {
-	elapsedTime += dt;
+	movementTimer->update(dt);
 	if (canMove())
 	{
 		// check bounds collisions
@@ -160,7 +168,7 @@ void GameScene::updatePlayerMovement(const float& dt)
 			// jump to the other side of the map
 			player->move(collizionDirection, map->getOppositeBoundCoordinate(collizionDirection));
 		}
-		elapsedTime = 0;
+		movementTimer->reset();
 	}
 }
 

@@ -2,6 +2,7 @@
 
 #include "Map.h"
 #include "Scene.h"
+#include "Timer.h"
 
 class GameScene : public Scene
 {
@@ -34,19 +35,21 @@ private:
 private:
 	Player* player;
 	Map* map;
+
+	// food
 	Tile* food;
 
 	float movementSpan; // each MovementSpan seconds, the player's position will be updated
 	const float baseMovementSpeed = 1; // the number of seconds between moves
 	const float speedIncrease = 0.3f; // will increase the movementSpan depending on the difficulty level
-	float elapsedTime; // counts the time that has passed since the last move
+	Timer* movementTimer;
 
 	int score;
 	sf::Text* scoreText;
 
 	// game over
 	float gameOver;
-	const float gameOverScreenDuration = 2.f;
-	float elapsedGameOverTime;
+	const float gameOverScreenDuration = 2.5f;
+	Timer* gameOverTimer;
 };
 
