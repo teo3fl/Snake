@@ -137,16 +137,16 @@ sf::Vector2f Map::getEmptySpace(Player* player)
 		{
 			if (vertical)
 			{
-				if (logicalMap[i][constant] == MapTile::None && !player->intersects(getRect(i, constant)))
+				if (logicalMap[constant][i] == MapTile::None && !player->intersects(getRect(constant, i)))
 				{
-					emptyTiles.emplace_back(i, constant);
+					emptyTiles.emplace_back(constant, i);
 				}
 			}
 			else
 			{
-				if (logicalMap[constant][i] == MapTile::None && !player->intersects(getRect(constant, i)))
+				if (logicalMap[i][constant] == MapTile::None && !player->intersects(getRect(i, constant)))
 				{
-					emptyTiles.emplace_back(constant, i);
+					emptyTiles.emplace_back(i, constant);
 				}
 			}
 		}
@@ -181,7 +181,7 @@ sf::Vector2f Map::getEmptySpace(Player* player)
 		// left edge (map[i][x - R] -> i = y - R + 1, x + R - 1)
 		if (0 <= x - R)
 		{
-			int startPoint = y - R + 1 >= 0 ? y - R +1 : 0;
+			int startPoint = y - R + 1 >= 0 ? y - R + 1 : 0;
 			int endPoint = y + R - 1 < gridHeigth ? y + R - 1 : gridHeigth - 1;
 			checkSide(startPoint, endPoint, x - R, true);
 		}
@@ -205,7 +205,7 @@ sf::Vector2f Map::getEmptySpace(Player* player)
 		}
 	}
 
-	return sf::Vector2f(-1,-1);
+	return sf::Vector2f(-1, -1);
 }
 
 float Map::getTileSize()
@@ -264,13 +264,13 @@ void Map::loadFromFile(const std::string& path)
 			// mark the changes inside the logical map
 			insertWallInLogicalMap(gridX, gridY, widthUnits, heigthUnits);
 		}
+		in.close();
 	}
 	else
 	{
 		throw path + "ERROR::MAP::COULD NOT LOAD FROM FILE::FILENAME: ";
 	}
 
-	in.close();
 }
 
 void Map::initializeLogicalMap(uint8_t width, uint8_t heigth)
@@ -284,7 +284,7 @@ void Map::initializeLogicalMap(uint8_t width, uint8_t heigth)
 
 void Map::insertWallInLogicalMap(uint8_t x, uint8_t y, uint8_t width, uint8_t heigth)
 {
-	for (uint16_t i = x; i < y + width; ++i)
-		for (uint16_t j = y; j < x + heigth; ++j)
+	for (uint16_t i = x; i < x + width; ++i)
+		for (uint16_t j = y; j < y + heigth; ++j)
 			logicalMap[i][j] = MapTile::Wall;
 }
