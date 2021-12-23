@@ -13,6 +13,7 @@ GameScene::GameScene(sf::RenderWindow* window, int level, const std::string& map
 
 GameScene::~GameScene()
 {
+	delete specialFoodTimer;
 	delete movementTimer;
 	delete gameOverTimer;
 
@@ -31,6 +32,7 @@ void GameScene::update(const float& dt)
 		updateKeyTime(dt);
 		updateInput(dt);
 		updatePlayerMovement(dt);
+		updateSpecialFood(dt);
 		checkFoodCollision();
 	}
 	else
@@ -86,6 +88,8 @@ void GameScene::initializeFood()
 	float tileSize = map->getTileSize();
 	sf::Vector2f position = map->getEmptySpace(player);
 	food = new Tile(position.x, position.y, tileSize, tileSize, sf::Color::Cyan);
+
+	specialFoodTimer = new Timer(specialFoodSpawnRate);
 }
 
 void GameScene::checkForGameOver()
@@ -122,6 +126,53 @@ void GameScene::checkFoodCollision()
 		++score;
 		updateScoreText();
 		spawnFood();
+	}
+
+	if (specialFood && player->getHead().intersects(specialFood->getGlobalBounds()))
+	{
+		player->grow(3);
+		score += 3;
+		updateScoreText();
+		delete specialFood;
+		specialFood = nullptr;
+	}
+}
+
+void GameScene::updateSpecialFood(const float& dt)
+{
+	if (specialFood)
+	{
+		specialFood->update(dt);
+		if (specialFood->reachedLifespanEnd())
+		{
+			delete specialFood;
+			specialFood = nullptr;
+		}
+	}
+
+	specialFoodTimer->update(dt);
+	if (specialFoodTimer->reachedEnd())
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> dist(1, 100);
+
+		int generatedNumber = dist(gen);
+
+		if (generatedNumber < specialFoodSpawnChance)
+		{
+			if (specialFood)
+			{
+				delete specialFood;
+				specialFood = nullptr;
+			}
+
+			auto spawnLocation = map->getEmptySpace(player);
+			float tileSize = map->getTileSize();
+			specialFood = new SpecialFood(spawnLocation.x, spawnLocation.y, tileSize, tileSize, sf::Color::Red, specialFoodLifeSpan);
+		}
+
+		specialFoodTimer->reset();
 	}
 }
 
@@ -187,6 +238,9 @@ void GameScene::renderBackground()
 void GameScene::renderEntities()
 {
 	player->render(window);
+
 	if (food)
 		food->render(window);
+	if (specialFood)
+		specialFood->render(window);
 }

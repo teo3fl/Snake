@@ -2,6 +2,7 @@
 
 #include "Map.h"
 #include "Scene.h"
+#include "SpecialFood.h"
 #include "Timer.h"
 
 class GameScene : public Scene
@@ -25,6 +26,7 @@ private:
 	void spawnFood();
 	void checkFoodCollision();
 
+	void updateSpecialFood(const float& dt);
 	void updateInput(const float& dt) override;
 	void updatePlayerMovement(const float& dt);
 	void updateScoreText();
@@ -38,6 +40,11 @@ private:
 
 	// food
 	Tile* food;
+	SpecialFood* specialFood;
+	const int specialFoodSpawnChance = 15; // 15% chance to spawn
+	const float specialFoodSpawnRate = 30.f; // tries to spawn it every X seconds
+	const float specialFoodLifeSpan = 10.f; // will destroy self after Y seconds
+	Timer* specialFoodTimer;
 
 	float movementSpan; // each MovementSpan seconds, the player's position will be updated
 	const float baseMovementSpeed = 1; // the number of seconds between moves
