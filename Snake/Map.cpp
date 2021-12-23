@@ -5,8 +5,8 @@ Map::Map(const std::string& path)
 {
 	upperLeftCorner.x = 80;
 	upperLeftCorner.y = 180;
-	boundColor = sf::Color::Green;
-	wallColor = sf::Color::Blue;
+	boundColor = sf::Color(77, 77, 77);
+	wallColor = sf::Color(0, 89, 232);
 	loadFromFile(path);
 }
 
