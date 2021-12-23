@@ -13,7 +13,7 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderTarget* target);
 
-	sf::Vector2f getStartingPosition();
+	sf::Vector2f* getStartingPosition();
 	float getOppositeBoundCoordinate(Direction collidingBound); // when colliding with a certain bound, returns the X or Y (based on the direction) coordinate of the opposite bound
 	Direction checkBoundCollision(sf::FloatRect playerHead);
 	bool checkWallCollision(sf::FloatRect playerHead);
@@ -40,6 +40,11 @@ private:
 	std::vector<std::vector<MapTile>> logicalMap;
 	int gridWidth;
 	int gridHeigth;
+
+	const uint8_t maxWidth = 28;
+	const uint8_t maxHeigth = 11;
+
+	sf::Vector2f* playerStartingPosition;
 
 	// random
 	std::random_device rd;

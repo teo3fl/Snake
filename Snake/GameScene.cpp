@@ -75,7 +75,7 @@ void GameScene::initializeVariables(int level)
 
 void GameScene::initializePlayer()
 {
-	player = new Player(sf::Vector2f(200, 300), map->getTileSize(), 3);
+	player = new Player(*map->getStartingPosition(), map->getTileSize(), 3);
 }
 
 void GameScene::initializeMap(const std::string& path)

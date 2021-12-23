@@ -42,9 +42,9 @@ void Map::render(sf::RenderTarget* target)
 	}
 }
 
-sf::Vector2f Map::getStartingPosition()
+sf::Vector2f* Map::getStartingPosition()
 {
-	return sf::Vector2f();
+	return playerStartingPosition;
 }
 
 float Map::getOppositeBoundCoordinate(Direction collidingBound)
@@ -219,6 +219,7 @@ void Map::loadFromFile(const std::string& path)
 	* File structure (in tiles):
 	*
 	* mapWidth mapHeight
+	* playerX playerY
 	* x y width height
 	* ...
 	*/
@@ -229,9 +230,18 @@ void Map::loadFromFile(const std::string& path)
 	std::ifstream in(path);
 	if (in.is_open())
 	{
+		// initialize dimensions
 		in >> gridWidth >> gridHeigth;
 
-		// logical map
+		// player starting point
+		int playerX, playerY;
+		in >> playerX >> playerY;
+		playerStartingPosition = new sf::Vector2f(
+			upperLeftCorner.x + playerX * tileSize, 
+			upperLeftCorner.y + playerY * tileSize
+		);
+
+		// random & logical map
 
 		gen = new std::mt19937(rd());
 		randomNumberWidth = new std::uniform_int_distribution(0, gridWidth - 1);
