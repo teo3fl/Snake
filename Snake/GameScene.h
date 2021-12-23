@@ -52,7 +52,7 @@ private:
 	// movement
 	float movementSpan; // each MovementSpan seconds, the player's position will be updated
 	const float baseMovementSpeed = 1; // the number of seconds between moves
-	const float speedIncrease = 0.3f; // will increase the movementSpan depending on the difficulty level
+	const float speedIncrease = -0.01f; // will increase the movementSpan depending on the difficulty level
 	Timer* movementTimer;
 
 	// score
