@@ -37,6 +37,12 @@ void GameScene::update(const float& dt)
 	}
 	else
 	{
+		if (!savedScore)
+		{
+			saveHighScore();
+			savedScore = true;
+		}
+
 		// freeze screen
 		gameOverTimer->update(dt);
 		if (gameOverTimer->reachedEnd())
@@ -55,6 +61,7 @@ void GameScene::render()
 
 void GameScene::initializeVariables(int level)
 {
+	this->level = level;
 	movementSpan = baseMovementSpeed + level * speedIncrease;
 	movementTimer = new Timer(movementSpan);
 	score = 0;
@@ -62,6 +69,8 @@ void GameScene::initializeVariables(int level)
 	food = NULL;
 	gameOverTimer = new Timer(gameOverScreenDuration);
 	gameOver = false;
+	loadHighScores();
+	savedScore = false;
 }
 
 void GameScene::initializePlayer()
@@ -79,10 +88,14 @@ void GameScene::initializeText()
 	scoreText = new sf::Text();
 	setText(*scoreText, font, sf::Color::White, 30, sf::Vector2f(30.f, 30.f), 0.5f);
 	updateScoreText();
-
 	text.push_back(scoreText);
 
-	setText(specialFoodRemainingSeconds, font, sf::Color::White, 30, sf::Vector2f(500.f, 30.f), 0.5f);
+	highScoreText = new sf::Text();
+	setText(*highScoreText, font, sf::Color::White, 30, sf::Vector2f(300.f, 30.f), 0.5f);
+	highScoreText->setString("Highscore: " + std::to_string(highScores[level]));
+	text.push_back(highScoreText);
+
+	setText(specialFoodRemainingSeconds, font, sf::Color::White, 30, sf::Vector2f(30.f, 80.f), 0.5f);
 }
 
 void GameScene::initializeFood()
@@ -92,6 +105,21 @@ void GameScene::initializeFood()
 	food = new Tile(position.x, position.y, tileSize, tileSize, sf::Color::Cyan);
 
 	specialFoodTimer = new Timer(specialFoodSpawnRate);
+}
+
+void GameScene::loadHighScores()
+{
+	int i = 0;
+	for (std::ifstream in(highScoredFilePath); in.is_open() && !in.eof(); i++)
+	{
+		int highScore;
+		in >> highScore;
+		if (i % 2 == 1)
+			highScores.push_back(highScore);
+	}
+
+	for (int i = highScores.size(); i <= level; ++i)
+		highScores.push_back(0);
 }
 
 void GameScene::checkForGameOver()
@@ -138,6 +166,20 @@ void GameScene::checkFoodCollision()
 		delete specialFood;
 		specialFood = nullptr;
 	}
+}
+
+void GameScene::saveHighScore()
+{
+	highScores[level] = score;
+
+	std::ofstream ofs(highScoredFilePath, std::ofstream::out);
+
+	for (size_t i = 0; i < highScores.size(); i++)
+	{
+		ofs << highScores[i] << ' ';
+	}
+
+	ofs.close();
 }
 
 void GameScene::updateSpecialFood(const float& dt)

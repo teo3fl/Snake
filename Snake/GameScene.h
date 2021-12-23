@@ -20,11 +20,13 @@ private:
 	void initializeMap(const std::string& path);
 	void initializeText();
 	void initializeFood();
+	void loadHighScores();
 
 	void checkForGameOver();
 	bool canMove();
 	void spawnFood();
 	void checkFoodCollision();
+	void saveHighScore();
 
 	void updateSpecialFood(const float& dt);
 	void updateInput(const float& dt) override;
@@ -47,13 +49,20 @@ private:
 	Timer* specialFoodTimer;
 	sf::Text specialFoodRemainingSeconds;
 
+	// movement
 	float movementSpan; // each MovementSpan seconds, the player's position will be updated
 	const float baseMovementSpeed = 1; // the number of seconds between moves
 	const float speedIncrease = 0.3f; // will increase the movementSpan depending on the difficulty level
 	Timer* movementTimer;
 
+	// score
 	int score;
 	sf::Text* scoreText;
+	sf::Text* highScoreText;
+	uint8_t level;
+	std::vector<uint16_t> highScores;
+	const std::string highScoredFilePath = "../External/Resources/Data/hs.dat";
+	bool savedScore;
 
 	// game over
 	float gameOver;
