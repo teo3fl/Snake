@@ -20,9 +20,10 @@ Scene::~Scene()
 
 void Scene::initializeFont()
 {
-	if (!font.loadFromFile("../External/Resources/Fonts/GALS.ttf"))
+	std::string path = "../External/Resources/Fonts/GALS.ttf";
+	if (!font.loadFromFile(path))
 	{
-		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_FONT_FROM_FILE";
+		throw std::runtime_error("ERROR: could not load font from path: " + path);
 	}
 }
 

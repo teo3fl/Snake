@@ -232,10 +232,20 @@ void Map::loadFromFile(const std::string& path)
 	{
 		// initialize dimensions
 		in >> gridWidth >> gridHeigth;
+		if (0 > gridWidth || gridWidth > maxWidth ||
+			0 > gridHeigth || gridHeigth > maxHeigth)
+		{
+			throw std::runtime_error("ERROR: map width cannot be higher than " + std::to_string(maxWidth) + " and map heigth cannot be higher than " + std::to_string(maxHeigth) + ", or lower than 1");
+		}
 
 		// player starting point
 		int playerX, playerY;
 		in >> playerX >> playerY;
+		bool spawnedInsideMap = 0 <= playerX && playerX <= gridWidth && 0 <= playerY && playerY <= gridHeigth;
+		if (!spawnedInsideMap)
+		{
+			throw std::runtime_error("ERROR: player starting point cannot be outside the map bounds");
+		}
 		playerStartingPosition = new sf::Vector2f(
 			upperLeftCorner.x + playerX * tileSize, 
 			upperLeftCorner.y + playerY * tileSize
@@ -278,7 +288,7 @@ void Map::loadFromFile(const std::string& path)
 	}
 	else
 	{
-		throw path + "ERROR::MAP::COULD NOT LOAD FROM FILE::FILENAME: ";
+		throw std::runtime_error("ERROR: map could not be loaded from path: " + path);
 	}
 
 }

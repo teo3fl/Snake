@@ -3,7 +3,14 @@
 
 int main()
 {
-    Game::start();
+    try
+    {
+        Game::start();
+    }
+    catch(std::runtime_error e)
+    {
+        std::cout << e.what();
+    }
 
     return 0;
 }
