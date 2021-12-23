@@ -81,6 +81,8 @@ void GameScene::initializeText()
 	updateScoreText();
 
 	text.push_back(scoreText);
+
+	setText(specialFoodRemainingSeconds, font, sf::Color::White, 30, sf::Vector2f(500.f, 30.f), 0.5f);
 }
 
 void GameScene::initializeFood()
@@ -143,6 +145,7 @@ void GameScene::updateSpecialFood(const float& dt)
 	if (specialFood)
 	{
 		specialFood->update(dt);
+		specialFoodRemainingSeconds.setString(std::to_string(specialFood->getRemainingSeconds()));
 		if (specialFood->reachedLifespanEnd())
 		{
 			delete specialFood;
@@ -242,5 +245,8 @@ void GameScene::renderEntities()
 	if (food)
 		food->render(window);
 	if (specialFood)
+	{
 		specialFood->render(window);
+		window->draw(specialFoodRemainingSeconds);
+	}
 }

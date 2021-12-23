@@ -45,6 +45,7 @@ private:
 	const float specialFoodSpawnRate = 30.f; // tries to spawn it every X seconds
 	const float specialFoodLifeSpan = 10.f; // will destroy self after Y seconds
 	Timer* specialFoodTimer;
+	sf::Text specialFoodRemainingSeconds;
 
 	float movementSpan; // each MovementSpan seconds, the player's position will be updated
 	const float baseMovementSpeed = 1; // the number of seconds between moves

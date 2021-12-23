@@ -21,3 +21,11 @@ void Timer::reset()
 {
 	elapsedTime = 0;
 }
+
+uint8_t Timer::getRemainingSeconds()
+{
+	if (elapsedTime >= maxTime)
+		return 0;
+
+	return maxTime - elapsedTime;
+}
