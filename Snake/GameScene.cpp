@@ -109,13 +109,11 @@ void GameScene::initializeFood()
 
 void GameScene::loadHighScores()
 {
-	int i = 0;
-	for (std::ifstream in(highScoredFilePath); in.is_open() && !in.eof(); i++)
+	for (std::ifstream in(highScoresFilePath); in.is_open() && !in.eof();)
 	{
 		int highScore;
 		in >> highScore;
-		if (i % 2 == 1)
-			highScores.push_back(highScore);
+		highScores.push_back(highScore);
 	}
 
 	for (int i = highScores.size(); i <= level; ++i)
@@ -170,13 +168,16 @@ void GameScene::checkFoodCollision()
 
 void GameScene::saveHighScore()
 {
+	if (highScores[level] >= score)
+		return;
+
 	highScores[level] = score;
 
-	std::ofstream ofs(highScoredFilePath, std::ofstream::out);
+	std::ofstream ofs(highScoresFilePath, std::ofstream::out);
 
 	for (size_t i = 0; i < highScores.size(); i++)
 	{
-		ofs << highScores[i] << ' ';
+		ofs << highScores[i] << std::endl;
 	}
 
 	ofs.close();
