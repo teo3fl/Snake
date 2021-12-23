@@ -12,6 +12,8 @@ Player::Player(sf::Vector2f startingPosition, float segmentSize, uint8_t initial
 	movementDirection = Direction::N;
 	pendingMovementDirection = Direction::N;
 
+	surplusSegments = 0;
+
 	initializeBody(startingPosition, initialLength);
 }
 
@@ -51,10 +53,15 @@ void Player::setMovingDirection(Direction newDirection)
 		pendingMovementDirection = newDirection;
 }
 
-void Player::grow()
+void Player::grow(int incr)
 {
 	sf::Vector2f tailPosition = body.back()->getPosition();
-	body.push_back(new Tile(tailPosition.x, tailPosition.y + segmentSize, segmentSize, segmentSize, getNextSegmentColor()));
+	for (size_t i = 0; i < incr; i++)
+	{
+		body.push_back(new Tile(tailPosition.x, tailPosition.y, segmentSize, segmentSize, getNextSegmentColor()));
+	}
+
+	surplusSegments += incr;
 }
 
 const sf::FloatRect& Player::getNextHeadPosition()
@@ -161,14 +168,17 @@ void Player::initializeBody(const sf::Vector2f& startingPosition, uint8_t initia
 
 void Player::moveBody()
 {
-	for (size_t i = body.size() - 1; i > 0; i--)
+	for (size_t i = body.size() - 1 - surplusSegments; i > 0; i--)
 	{
 		auto nextTilePosition = body[i - 1]->getPosition();
 		body[i]->setPosition(nextTilePosition.x, nextTilePosition.y);
 	}
+
+	if (surplusSegments > 0)
+		--surplusSegments;
 }
 
 const sf::Color& Player::getNextSegmentColor()
 {
-	return bodyColors[(body.size()-1)/2 % bodyColors.size()];
+	return bodyColors[(body.size() - 1) / 2 % bodyColors.size()];
 }

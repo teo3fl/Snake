@@ -12,7 +12,7 @@ public:
 
 	void setMovingDirection(Direction newDirection);
 
-	void grow();
+	void grow(int incr = 1);
 	const sf::FloatRect& getNextHeadPosition();
 	const sf::FloatRect getHead();
 	bool checkSelfCollision();
@@ -35,6 +35,7 @@ private:
 	Direction pendingMovementDirection;  
 
 	float segmentSize;
+	uint8_t surplusSegments;
 
 	sf::Color headColor;
 	std::vector<sf::Color> bodyColors;
