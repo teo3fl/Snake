@@ -58,7 +58,6 @@ private:
 	// score
 	int score;
 	sf::Text* scoreText;
-	sf::Text* highScoreText;
 	uint8_t level;
 	std::vector<uint16_t> highScores;
 	const std::string highScoresFilePath = "../External/Resources/Data/hs.dat";

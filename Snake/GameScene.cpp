@@ -90,12 +90,17 @@ void GameScene::initializeText()
 	updateScoreText();
 	text.push_back(scoreText);
 
-	highScoreText = new sf::Text();
+	sf::Text* highScoreText = new sf::Text();
 	setText(*highScoreText, font, sf::Color::White, 30, sf::Vector2f(300.f, 30.f), 0.5f);
 	highScoreText->setString("Highscore: " + std::to_string(highScores[level]));
 	text.push_back(highScoreText);
 
-	setText(specialFoodRemainingSeconds, font, sf::Color::White, 30, sf::Vector2f(30.f, 80.f), 0.5f);
+	sf::Text* levelText = new sf::Text();
+	setText(*levelText, font, sf::Color::White, 30, sf::Vector2f(30.f, 80.f), 0.5f);
+	levelText->setString("Level " + std::to_string(level + 1));
+	text.push_back(levelText);
+
+	setText(specialFoodRemainingSeconds, font, sf::Color::White, 30, sf::Vector2f(300.f, 80.f), 0.5f);
 }
 
 void GameScene::initializeFood()
@@ -188,7 +193,7 @@ void GameScene::updateSpecialFood(const float& dt)
 	if (specialFood)
 	{
 		specialFood->update(dt);
-		specialFoodRemainingSeconds.setString(std::to_string(specialFood->getRemainingSeconds()));
+		specialFoodRemainingSeconds.setString("Time: " + std::to_string(specialFood->getRemainingSeconds()));
 		if (specialFood->reachedLifespanEnd())
 		{
 			delete specialFood;
