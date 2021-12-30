@@ -6,6 +6,7 @@
 MenuScene::MenuScene(sf::RenderWindow* window, std::stack<Scene*>* scenes)
 	: Scene(window), scenes(scenes)
 {
+	initializeVariables();
 	initializeFont();
 	initializeButtons();
 	initializeText();
@@ -47,6 +48,12 @@ void MenuScene::initializeText()
 	text.push_back(levelText);
 }
 
+void MenuScene::initializeVariables()
+{
+	auto fileCount = getDirectoryFileCount(resourcesPath + "Maps");
+	mapCount = fileCount < maxMapCount ? fileCount : maxMapCount;
+}
+
 void MenuScene::initializeButtons()
 {
 	float offsetX = 350;
@@ -56,7 +63,7 @@ void MenuScene::initializeButtons()
 	int lineCapacity = 8;
 	float buttonSize = 50;
 
-	for (int i = 0; i < 48; ++i)
+	for (int i = 0; i < mapCount; ++i)
 	{
 		float x = offsetX + (buttonSize + padding) * (i % lineCapacity);
 		float y = offsetY + (buttonSize + padding) * (i / lineCapacity);
@@ -89,7 +96,7 @@ void MenuScene::updateButtons()
 		it.second->update(mousePosWindow);
 	}
 
-	for (int i = 1; i < 49; ++i)
+	for (int i = 1; i < mapCount + 1; ++i)
 	{
 		Button* button = buttons["LVL" + std::to_string(i)];
 		if (button->isPressed())
@@ -121,6 +128,11 @@ void MenuScene::renderButtons()
 	{
 		it.second->render(window);
 	}
+}
+
+std::size_t MenuScene::getDirectoryFileCount(std::filesystem::path path)
+{
+	return (std::size_t)std::distance(std::filesystem::directory_iterator{ path }, std::filesystem::directory_iterator{});
 }
 
 void MenuScene::render()

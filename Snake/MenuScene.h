@@ -13,6 +13,7 @@ public:
 	void render() override;
 
 private:
+	void initializeVariables();
 	void initializeButtons();
 	void initializeText();
 
@@ -22,11 +23,16 @@ private:
 
 	void renderButtons();
 
+	std::size_t getDirectoryFileCount(std::filesystem::path path);
+
 private:
 	std::stack<Scene*>* scenes;
 	std::map<std::string, Button*> buttons;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
+
+	uint8_t mapCount;
+	const uint8_t maxMapCount = 48;
 };
 
