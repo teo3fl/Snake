@@ -164,6 +164,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="InfoScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MenuScene.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="InfoScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Player.h" />

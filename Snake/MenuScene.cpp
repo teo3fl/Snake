@@ -2,6 +2,7 @@
 #include "MenuScene.h"
 
 #include "GameScene.h"
+#include "InfoScene.h"
 
 MenuScene::MenuScene(sf::RenderWindow* window, std::stack<Scene*>* scenes)
 	: Scene(window), scenes(scenes)
@@ -73,6 +74,10 @@ void MenuScene::initializeButtons()
 			sf::Color::White, sf::Color::Black);
 	}
 
+	buttons["CREATE_MAP"] = new Button(30, 350, 200, 80,
+		&font, "HOW TO ADD\nA MAP", 30,
+		sf::Color::White, sf::Color::Black);
+
 	buttons["EXIT_STATE"] = new Button(20, 500, 100, 50,
 		&font, "EXIT", 30,
 		sf::Color::White, sf::Color::Black);
@@ -107,6 +112,12 @@ void MenuScene::updateButtons()
 
 			break;
 		}
+	}
+
+	if (buttons["CREATE_MAP"]->isPressed())
+	{
+		buttons["CREATE_MAP"]->reset();
+		scenes->push(new InfoScene(window));
 	}
 
 	if (buttons["EXIT_STATE"]->isPressed())
