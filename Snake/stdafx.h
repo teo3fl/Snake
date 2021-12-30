@@ -10,6 +10,7 @@
 #include <sstream>
 #include <cstdint>
 #include <iostream>
+#include <filesystem>
 
 // SFML
 

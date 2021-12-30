@@ -92,12 +92,12 @@ void GameScene::initializeText()
 
 	sf::Text* highScoreText = new sf::Text();
 	setText(*highScoreText, font, sf::Color::White, 30, sf::Vector2f(300.f, 30.f), 0.5f);
-	highScoreText->setString("Highscore: " + std::to_string(highScores[level]));
+	highScoreText->setString("Highscore: " + std::to_string(highScores[level - 1]));
 	text.push_back(highScoreText);
 
 	sf::Text* levelText = new sf::Text();
 	setText(*levelText, font, sf::Color::White, 30, sf::Vector2f(30.f, 80.f), 0.5f);
-	levelText->setString("Level " + std::to_string(level + 1));
+	levelText->setString("Level " + std::to_string(level));
 	text.push_back(levelText);
 
 	setText(specialFoodRemainingSeconds, font, sf::Color::White, 30, sf::Vector2f(300.f, 80.f), 0.5f);
@@ -114,14 +114,15 @@ void GameScene::initializeFood()
 
 void GameScene::loadHighScores()
 {
-	for (std::ifstream in(highScoresFilePath); in.is_open() && !in.eof();)
+	auto filePath = dataDirectoryPath + '/' + highScoresFileName;
+	for (std::ifstream in(filePath); in.is_open() && !in.eof();)
 	{
 		int highScore;
 		in >> highScore;
 		highScores.push_back(highScore);
 	}
 
-	for (int i = highScores.size(); i <= level; ++i)
+	for (int i = highScores.size(); i < level; ++i)
 		highScores.push_back(0);
 }
 
@@ -173,12 +174,15 @@ void GameScene::checkFoodCollision()
 
 void GameScene::saveHighScore()
 {
-	if (highScores[level] >= score)
+	if (highScores[level - 1] >= score)
 		return;
 
-	highScores[level] = score;
+	highScores[level - 1] = score;
 
-	std::ofstream ofs(highScoresFilePath, std::ofstream::out);
+	assureDirectoryExistence(dataDirectoryPath);
+
+	auto filePath = dataDirectoryPath + '/' + highScoresFileName;
+	std::ofstream ofs(filePath, std::ofstream::out);
 
 	for (size_t i = 0; i < highScores.size(); i++)
 	{
@@ -186,6 +190,16 @@ void GameScene::saveHighScore()
 	}
 
 	ofs.close();
+}
+
+void GameScene::assureDirectoryExistence(const std::string& dir)
+{
+	namespace fs = std::filesystem;
+
+	if (!fs::is_directory(dir) || !fs::exists(dir))
+	{ 
+		fs::create_directory(dir);
+	}
 }
 
 void GameScene::updateSpecialFood(const float& dt)

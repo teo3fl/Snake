@@ -27,6 +27,7 @@ private:
 	void spawnFood();
 	void checkFoodCollision();
 	void saveHighScore();
+	void assureDirectoryExistence(const std::string& dir);
 
 	void updateSpecialFood(const float& dt);
 	void updateInput(const float& dt) override;
@@ -60,7 +61,8 @@ private:
 	sf::Text* scoreText;
 	uint8_t level;
 	std::vector<uint16_t> highScores;
-	const std::string highScoresFilePath = "../External/Resources/Data/hs.dat";
+	const std::string highScoresFileName = "hs.dat";
+	const std::string dataDirectoryPath = "../External/Resources/Data";
 	bool savedScore;
 
 	// game over
