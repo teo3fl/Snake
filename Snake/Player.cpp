@@ -49,8 +49,10 @@ void Player::setMovingDirection(Direction newDirection)
 
 	bool canChangeDirection = !((int)newDirection + (int)movementDirection == 3 || (int)newDirection + (int)movementDirection == 7);
 
-	if (canChangeDirection)
+	if (canChangeDirection && pendingMovementDirection != newDirection)
+	{
 		pendingMovementDirection = newDirection;
+	}
 }
 
 void Player::grow(int incr)
@@ -67,7 +69,7 @@ void Player::grow(int incr)
 const sf::FloatRect& Player::getNextHeadPosition()
 {
 	auto currentHeadPosition = body[0]->getPosition();
-	switch (movementDirection)
+	switch (pendingMovementDirection)
 	{
 	case Direction::N:
 		nextHeadPosition = sf::Vector2f(currentHeadPosition.x, currentHeadPosition.y - segmentSize);
