@@ -171,7 +171,7 @@ sf::Vector2f Map::getEmptySpace(Player* player)
 		}
 
 		// lower edge (map[y + R][i] -> i = x - R, x + R)
-		if (y + R < gridWidth)
+		if (y + R < gridHeigth)
 		{
 			int startPoint = x - R >= 0 ? x - R : 0;
 			int endPoint = x + R < gridWidth ? x + R : gridWidth - 1;
@@ -187,11 +187,11 @@ sf::Vector2f Map::getEmptySpace(Player* player)
 		}
 
 		// right edge (map[i][x + R] -> i = y - R + 1, x + R - 1)
-		if (x + R < gridHeigth)
+		if (x + R < gridWidth)
 		{
 			int startPoint = y - R + 1 >= 0 ? y - R + 1 : 0;
 			int endPoint = y + R - 1 < gridHeigth ? y + R - 1 : gridHeigth - 1;
-			checkSide(startPoint, endPoint, x - R, true);
+			checkSide(startPoint, endPoint, x + R, true);
 		}
 
 		if (emptyTiles.size() > 0)

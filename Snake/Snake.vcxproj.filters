@@ -88,8 +88,97 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\External\Resources\Maps\map0.ini">
+    <None Include="..\External\Resources\Maps\map1.ini">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\External\Resources\Maps\map2.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map3.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map4.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map5.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map6.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map7.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map8.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map9.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map10.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map11.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map12.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map13.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map14.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map15.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map16.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map17.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map18.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map20.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map21.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map22.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map23.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map24.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map25.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map26.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map27.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map28.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\External\Resources\Maps\map29.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\External\Resources\Maps\map19.ini">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\External\Resources\Maps\map30.ini">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

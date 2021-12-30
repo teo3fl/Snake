@@ -89,9 +89,9 @@ void MenuScene::updateButtons()
 		it.second->update(mousePosWindow);
 	}
 
-	for (int i = 0; i < 48; ++i)
+	for (int i = 1; i < 49; ++i)
 	{
-		Button* button = buttons["LVL" + std::to_string(i + 1)];
+		Button* button = buttons["LVL" + std::to_string(i)];
 		if (button->isPressed())
 		{
 			button->reset();

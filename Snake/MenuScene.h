@@ -13,7 +13,6 @@ public:
 	void render() override;
 
 private:
-	//Functions
 	void initializeButtons();
 	void initializeText();
 
