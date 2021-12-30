@@ -62,7 +62,6 @@ private:
 	uint8_t level;
 	std::vector<uint16_t> highScores;
 	const std::string highScoresFileName = "hs.dat";
-	const std::string dataDirectoryPath = "../External/Resources/Data";
 	bool savedScore;
 
 	// game over

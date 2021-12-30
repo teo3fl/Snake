@@ -9,7 +9,10 @@ int main()
     }
     catch(std::runtime_error e)
     {
+        Game::close();
         std::cout << e.what();
+        std::cout << "\nForce closing. ";
+        system("pause");
     }
 
     return 0;

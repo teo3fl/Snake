@@ -28,7 +28,5 @@ private:
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
-
-	const std::string mapPath = "../External/Resources/Maps/";
 };
 

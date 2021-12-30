@@ -114,7 +114,7 @@ void GameScene::initializeFood()
 
 void GameScene::loadHighScores()
 {
-	auto filePath = dataDirectoryPath + '/' + highScoresFileName;
+	auto filePath = resourcesPath + "Data/" + highScoresFileName;
 	for (std::ifstream in(filePath); in.is_open() && !in.eof();)
 	{
 		int highScore;
@@ -179,9 +179,10 @@ void GameScene::saveHighScore()
 
 	highScores[level - 1] = score;
 
-	assureDirectoryExistence(dataDirectoryPath);
+	auto dir = resourcesPath + "Data";
+	assureDirectoryExistence(dir);
 
-	auto filePath = dataDirectoryPath + '/' + highScoresFileName;
+	auto filePath = dir + '/' + highScoresFileName;
 	std::ofstream ofs(filePath, std::ofstream::out);
 
 	for (size_t i = 0; i < highScores.size(); i++)

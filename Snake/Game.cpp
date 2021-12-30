@@ -92,3 +92,8 @@ void Game::start()
 {
 	Game::getInstance()->run();
 }
+
+void Game::close()
+{
+	Game::getInstance()->window->close();
+}

@@ -5,6 +5,7 @@ class Game
 {
 public:
 	static void start();
+	static void close();
 
 private:
 	Game();

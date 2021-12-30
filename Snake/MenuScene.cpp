@@ -95,7 +95,7 @@ void MenuScene::updateButtons()
 		if (button->isPressed())
 		{
 			button->reset();
-			auto path = mapPath + "map" + std::to_string(i) + ".ini";
+			auto path = resourcesPath + "Maps/map" + std::to_string(i) + ".ini";
 			scenes->push(new GameScene(window, i, path));
 
 			break;

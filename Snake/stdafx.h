@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef _DEBUG
+#define resourcesPath std::string("../External/Resources/")
+#else
+#define resourcesPath std::string("./Resources/")
+#endif
+
 // std
 #include <vector>
 #include <stack>
@@ -13,5 +19,4 @@
 #include <filesystem>
 
 // SFML
-
 #include <SFML/Graphics.hpp>
